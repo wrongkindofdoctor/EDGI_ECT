@@ -17,7 +17,8 @@ AC_PROG_CC
 AC_PROG_CXX
 
 # check for netcdf
-AC_CHECK_HEADERS([netcdf.h], [], [AC_MSG_ERROR([netcdf.h could not be found. Please set CPPFLAGS.])])
+AC_CHECK_HEADER([netcdf.h], [], [AC_MSG_ERROR([netcdf.h not found. Please set CPPFLAGS.])])
+AC_CHECK_HEADER([netcdfcpp.h], [], [AC_MSG_ERROR([netcdfcpp.h not found. Please set CPPFLAGS.])])
 AC_SEARCH_LIBS([nc_open], [netcdf])
 
 # check for EDGI package
