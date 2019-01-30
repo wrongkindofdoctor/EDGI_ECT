@@ -1,33 +1,26 @@
-AC_INIT([EDGI_ECT], [0.0], [gfdl.climate.model.info@noaa.gov])
+#   -*- Autoconf -*-
+## Process this file with autoconf to produce a configure script.
+# This is part of the Ensemble Consistency Test (ECT) package. 
+#
+# Running autoconf on this file will trigger a warning if
+# autoconf is not at least the specified version.
+AC_PREREQ([2.69])
+
+# Initialize with name, version, and support email address.
+AC_INIT([EDGI_ECT], [1.0], [gfdl.climate.model.info@noaa.gov])
+
+# This call is required by automake.
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
+
+# Check for C and C++ compilers
 AC_PROG_CC
-AC_PROG_FC
-AM_PROG_AR
-AC_PROG_LIBTOOL
+AC_PROG_CXX
 
+# check for netcdf
+AC_CHECK_HEADERS([netcdf.h], [], [AC_MSG_ERROR([netcdf.h could not be found. Please set CPPFLAGS.])])
+AC_SEARCH_LIBS([nc_open], [netcdf])
 
-AC_ARG_ENABLE([fortran_bindings],
-[--enable-fortran-bindings Create Fortran bindings],
-[case "${enableval}" in
-  yes) fortran_bindings=true ;;
-  no)  fortran_bindings=false ;;
-  *) AC_MSG_ERROR([bad value ${enableval} for --enable-fortran-bindings]) ;;
-esac],[fortran_bindings=false])
-AM_CONDITIONAL([CREATE_FORTRAN_BINDINGS], [test x$fortran_bindings = xtrue])
-
-
-AC_ARG_ENABLE([single_precision],
-[--enable-single-precision Use single precision],
-[case "${enableval}" in
-  yes) single_precision=true ;;
-  no)  single_precision=false ;;
-  *) AC_MSG_ERROR([bad value ${enableval} for --enable-single-precision]) ;;
-esac],[single_precision=false])
-AM_CONDITIONAL([USE_SINGLE_PRECISION], [test x$single_precision = xtrue])
-
-
-AM_PATH_PYTHON([3.5],,[:])
-AM_CONDITIONAL([HAVE_PYTHON], [test "$PYTHON" != :])
+# check for EDGI package
 
 
 AC_CONFIG_HEADERS([config.h])
@@ -36,4 +29,6 @@ AC_CONFIG_FILES([
  src/Makefile
 ])
 AC_OUTPUT
+
+
 
